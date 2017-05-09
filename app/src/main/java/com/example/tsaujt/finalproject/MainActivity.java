@@ -1,13 +1,18 @@
 package com.example.tsaujt.finalproject;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,10 +27,23 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               startActivity(
+                      new Intent(MainActivity.this, AddActivity.class));
             }
         });
+
+        ListView list = (ListView) findViewById(R.id.list);
+        DBHelper helper = new DBHelper(this, "record.db", null, 3);
+        Cursor c = helper.getReadableDatabase().query(
+                "record", null, null, null, null, null, null);
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_expandable_list_item_2,
+                c,
+                new String[] {"type", "money"},
+                new int[] {android.R.id.text1, android.R.id.text2},
+                0);
+        list.setAdapter(adapter);
     }
 
     @Override

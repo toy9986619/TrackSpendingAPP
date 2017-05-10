@@ -16,6 +16,9 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public String date = "20160528";
+    DBHelper DB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //漂浮按鈕
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,18 +36,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        this.setTitle(date);        //設定標題
+
+        //set DB
+        DB = DBHelper.getInstance(this);
+
+        //List顯示
         ListView list = (ListView) findViewById(R.id.list);
-        DBHelper helper = new DBHelper(this, "record.db", null, 3);
-        Cursor c = helper.getReadableDatabase().query(
+
+        //showItem(list);
+        Cursor c = DB.getReadableDatabase().query(
                 "record", null, null, null, null, null, null);
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_expandable_list_item_2,
+                R.layout.list_row,
                 c,
-                new String[] {"type", "money"},
-                new int[] {android.R.id.text1, android.R.id.text2},
+                new String[] {"_id", "time", "type", "money"},
+                new int[] {R.id.item_id, R.id.item_time, R.id.item_type, R.id.item_money},
                 0);
+
         list.setAdapter(adapter);
+
+    }
+
+    public void showItem(ListView list){
+        /*String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
+        Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ date });
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                R.layout.list_row,
+                c,
+                new String[] {"record._id", "record.time", "spedntime.typename", "record.money"},
+                new int[] {R.id.item_id, R.id.item_time, R.id.item_type, R.id.item_money},
+                0);
+        list.setAdapter(adapter);*/
     }
 
     @Override

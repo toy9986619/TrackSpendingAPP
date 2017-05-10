@@ -30,9 +30,9 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        DB = new DBHelper(this, null, null, 3);
+        DB = DBHelper.getInstance(this);
         findViews();
-
+        this.setTitle("新增花費");
     }
 
     public void findViews(){

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class AddActivity extends AppCompatActivity {
     private Button buttonCancel;
     private EditText eExplanation;
     private EditText eTime;
+
     private int spendType=0;
     private int account=0;
 
@@ -45,6 +47,7 @@ public class AddActivity extends AppCompatActivity {
         buttonCancel = (Button) findViewById(R.id.buttonCancel);
         eExplanation = (EditText) findViewById(R.id.explanation);
         eTime = (EditText) findViewById(R.id.time);
+
 
         buttonBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +91,11 @@ public class AddActivity extends AppCompatActivity {
         long id = DB.getWritableDatabase().insert("record", null, values);
         Log.d("ADD", id+"");
 
+        AddActivity.this.finish();
+    }
+
+    public void cancelButton(View v){
+        AddActivity.this.finish();
     }
 
 

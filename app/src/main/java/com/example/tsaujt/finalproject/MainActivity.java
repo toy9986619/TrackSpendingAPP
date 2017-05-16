@@ -12,13 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public String time = "20160528";
     DBHelper DB;
+    LinearLayout liner;
     //private Toolbar toolbar;
 
     @Override
@@ -46,21 +49,13 @@ public class MainActivity extends AppCompatActivity {
         //set DB
         DB = DBHelper.getInstance(this);
 
-        //List顯示
-        ListView list = (ListView) findViewById(R.id.list);
 
-        //showItem(list);
-        Cursor c = DB.getReadableDatabase().query(
-                "record", null, null, null, null, null, null);
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.list_row,
-                c,
-                new String[] {"_id", "time", "type", "money"},
-                new int[] {R.id.item_id, R.id.item_time, R.id.item_type, R.id.item_money},
-                0);
+        //Liner顯示
+        liner = (LinearLayout) findViewById(R.id.LinerShow);
 
-        list.setAdapter(adapter);
+
+        //showItem(liner);
 
     }
 
@@ -68,21 +63,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        //List顯示
-        ListView list = (ListView) findViewById(R.id.list);
+        //Liner顯示
+        if(liner.getChildCount()!=0) {
+            liner.removeAllViews();
+        }
 
-        //showItem(list);
-        Cursor c = DB.getReadableDatabase().query(
-                "record", null, null, null, null, null, null);
+        //liner = (LinearLayout) findViewById(R.id.LinerShow);
+        showItem(liner);
 
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.list_row,
-                c,
-                new String[] {"_id", "time", "type", "money"},
-                new int[] {R.id.item_id, R.id.item_time, R.id.item_type, R.id.item_money},
-                0);
 
-        list.setAdapter(adapter);
     };
 
     @Override
@@ -101,17 +90,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showItem(ListView list){
-        /*String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
-        Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ date });
+
+
+
+    /*public void showItem(ListView list){
+        String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
+        Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.list_row,
                 c,
-                new String[] {"record._id", "record.time", "spedntime.typename", "record.money"},
+                new String[] {"record._id", "record.time", "spendtime.typename", "record.money"},
                 new int[] {R.id.item_id, R.id.item_time, R.id.item_type, R.id.item_money},
                 0);
-        list.setAdapter(adapter);*/
+        list.setAdapter(adapter);
+
+
+        //c.close();
+    }*/
+
+    public void showItem(LinearLayout liner){
+        String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
+        Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
+        String itemString="";
+        TextView itemTV = new TextView(this);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getColumnIndex("_id")!=0){
+                itemString = c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
+                itemTV.setText(itemString);
+                liner.addView(itemTV);
+            }
+            c.moveToNext();
+        }
+
+
     }
 
     @Override
@@ -145,4 +158,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    public void showDB(View view){
+        startActivity(
+                new Intent(MainActivity.this, ShowDBActivity.class));
+    }
 }

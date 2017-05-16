@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION=5;
+    public static final int DATABASE_VERSION=6;
     private static final String DATABASE_NAME="record.db";
     //public static final String TABLE_NAME="record";
     public static final String COLOUMN_ID="_id";
@@ -49,7 +49,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         ContentValues value = new ContentValues();
         value.put("typename", "早餐");
+        db.insert("spendtype", null, value);
         value.put("typename", "中餐");
+        db.insert("spendtype", null, value);
         value.put("typename", "晚餐");
         db.insert("spendtype", null, value);
     }

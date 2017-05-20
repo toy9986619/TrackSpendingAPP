@@ -7,11 +7,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,11 +52,8 @@ public class MainActivity extends AppCompatActivity {
         //set DB
         DB = DBHelper.getInstance(this);
 
-
-
         //Liner顯示
         liner = (LinearLayout) findViewById(R.id.LinerShow);
-
 
         //showItem(liner);
 
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         //Liner顯示
         if(liner.getChildCount()!=0) {
             liner.removeAllViews();
+            //((ViewGroup) liner.getParent()).removeView(liner);
         }
 
         //liner = (LinearLayout) findViewById(R.id.LinerShow);
@@ -113,13 +114,23 @@ public class MainActivity extends AppCompatActivity {
         String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
         Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
         String itemString="";
-        TextView itemTV = new TextView(this);
+        //int linerIndex = 0;
+
         c.moveToFirst();
         while(!c.isAfterLast()){
             if(c.getColumnIndex("_id")!=0){
-                itemString = c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
+                TextView itemTV = new TextView(this);
+                itemString =c.getString(c.getColumnIndex("_id"))+" "+ c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
                 itemTV.setText(itemString);
+                itemTV.setId(Utils.generateViewId());
+                itemTV.setClickable(true);
+                itemTV.setOnClickListener(editEvent);
+                LinearLayoutCompat.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(200, 200);
+                itemTV.setLayoutParams(layoutParams);
+                itemTV.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
                 liner.addView(itemTV);
+                //liner.addView(itemTV, linerIndex);
+                //linerIndex++;
             }
             c.moveToNext();
         }
@@ -156,6 +167,22 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 1);
 
             return true;
+        }
+    };
+
+    private View.OnClickListener editEvent = new View.OnClickListener () {
+
+        @Override
+        public void onClick(View v) {
+            Intent editIntent = new Intent(MainActivity.this, ShowRecordActivity.class);
+            Bundle recordBundle = new Bundle();
+            int recordId = liner.indexOfChild(v);
+
+            recordBundle.putString("time", time);
+            recordBundle.putInt("_id", recordId);
+
+            editIntent.putExtras(recordBundle);
+            startActivity(editIntent);
         }
     };
 

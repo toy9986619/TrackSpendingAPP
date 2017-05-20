@@ -27,7 +27,12 @@
         <activity
             android:name=".PopUpTimeChoose"
             android:theme="@style/AppTheme.PopUpTime" />
-        <activity android:name=".ShowDBActivity"></activity>
+        <activity android:name=".ShowDBActivity" />
+        <activity android:name=".EditActivity" />
+        <activity
+            android:name=".ShowRecordActivity"
+            android:label="@string/title_activity_show_record"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

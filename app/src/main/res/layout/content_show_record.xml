@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.tsaujt.finalproject.MainActivity"
+    tools:showIn="@layout/activity_show_record">
+
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="194dp"
+        android:layout_height="65dp"
+        android:text="內容"
+        android:gravity="end"
+        android:textSize="50sp"
+        app:layout_constraintTop_toTopOf="@+id/textView33"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView33"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="-19dp"
+        app:layout_constraintRight_toRightOf="@+id/textView34" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="194dp"
+        android:layout_height="62dp"
+        android:text="內容"
+        android:gravity="end"
+        android:textSize="50sp"
+        app:layout_constraintTop_toTopOf="@+id/textView31"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView31"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginStart="14dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="@+id/textView35" />
+
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="192dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:text="內容"
+        android:gravity="end"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView32"
+        app:layout_constraintTop_toTopOf="@+id/textView32"
+        app:layout_constraintVertical_bias="0.727"
+        android:layout_marginStart="14dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="@+id/show_money" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:text="類型"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="@+id/textView29"
+        android:layout_marginLeft="87dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView29"
+        app:layout_constraintBottom_toBottomOf="@+id/textView29"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="87dp" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:text="類型"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="@+id/textView27"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView27"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="87dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView27"
+        app:layout_constraintVertical_bias="0.615"
+        android:layout_marginStart="87dp" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:layout_marginLeft="87dp"
+        android:text="類型"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView28"
+        app:layout_constraintTop_toTopOf="@+id/textView28"
+        app:layout_constraintBottom_toBottomOf="@+id/textView28"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="87dp" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="74dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="14dp"
+        android:text="保留"
+        app:layout_constraintLeft_toLeftOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="74dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="21dp"
+        android:text="保留"
+        app:layout_constraintLeft_toLeftOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="74dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="18dp"
+        android:text="保留"
+        app:layout_constraintLeft_toLeftOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <TextView
+        android:id="@+id/show_money"
+        android:layout_width="189dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:text="NT$"
+        android:gravity="end"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView24"
+        app:layout_constraintLeft_toRightOf="@+id/show_spendtype"
+        app:layout_constraintTop_toTopOf="@+id/textView24"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteY="38dp" />
+
+    <TextView
+        android:id="@+id/show_spendtype"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="27dp"
+        android:text="類型"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView24"
+        app:layout_constraintLeft_toRightOf="@+id/textView24"
+        app:layout_constraintTop_toTopOf="@+id/textView24"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="13dp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="74dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
+        android:text="保留"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/show_Time"
+        android:layout_width="285dp"
+        android:layout_height="42dp"
+        android:text="時間: "
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="379dp"
+        android:layout_marginLeft="41dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="101dp"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="28dp"
+        android:text="刪除"
+        app:layout_constraintLeft_toLeftOf="@+id/show_Time"
+        app:layout_constraintTop_toBottomOf="@+id/show_Time" />
+</android.support.constraint.ConstraintLayout>

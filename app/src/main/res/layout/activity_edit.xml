@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.tsaujt.finalproject.EditActivity">
 
+    <include layout="@layout/content_editrecord" />
+
 </android.support.constraint.ConstraintLayout>

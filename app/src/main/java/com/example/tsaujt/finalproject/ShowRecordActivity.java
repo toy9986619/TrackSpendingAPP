@@ -17,6 +17,12 @@ public class ShowRecordActivity extends AppCompatActivity {
     private TextView showMoney;
     private TextView showSpentType;
     private TextView showTime;
+    int money;
+    int spendType;
+    String spendName;
+    String explanation;
+    int recordId;
+    String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +34,19 @@ public class ShowRecordActivity extends AppCompatActivity {
 
         findViews();
         Bundle bundle = this.getIntent().getExtras();
-        String time = bundle.getString("time");
-        int recordId = bundle.getInt("_id");
+        time = bundle.getString("time");
+        recordId = bundle.getInt("_id");
         String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
         Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
 
         c.moveToPosition(recordId);
-        String money = "NT$"+c.getString(c.getColumnIndex("money"));
-        String spendType = c.getString(c.getColumnIndex("typename"));
+        money = c.getInt(c.getColumnIndex("money"));
+        spendType=c.getInt(c.getColumnIndex("type"));
+        spendName = c.getString(c.getColumnIndex("typename"));
+        explanation = c.getString(c.getColumnIndex("explanation"));
 
-        showMoney.setText(money);
-        showSpentType.setText(spendType);
+        showMoney.setText("NT$"+money);
+        showSpentType.setText(spendName);
         showTime.setText(time);
 
 
@@ -60,8 +68,16 @@ public class ShowRecordActivity extends AppCompatActivity {
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener(){
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
-            /*Intent intent = new Intent(ShowRecordActivity.this, PopUpTimeChoose.class);
-            startActivityForResult(intent, 1);*/
+            Intent intent = new Intent(ShowRecordActivity.this, EditActivity.class);
+            Bundle bundle = ShowRecordActivity.this.getIntent().getExtras();
+            bundle.putString("time", time);
+            bundle.putInt("_id", recordId);
+            bundle.putInt("money", money);
+            bundle.putInt("spendType", spendType);
+            bundle.putString("explanation", explanation);
+
+            intent.putExtras(bundle);
+            startActivityForResult(intent, 1);
 
             return true;
         }

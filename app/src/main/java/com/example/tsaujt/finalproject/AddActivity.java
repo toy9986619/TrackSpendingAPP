@@ -14,19 +14,19 @@ import android.widget.TextView;
 
 public class AddActivity extends AppCompatActivity {
 
-    private DBHelper DB;
-    private EditText eMoney;
-    private TextView tShow;
-    private Button buttonBreakfast;
-    private Button buttonLunch;
-    private Button buttonDinner;
-    private Button buttonSave;
-    private Button buttonCancel;
-    private EditText eExplanation;
-    private EditText eTime;
+    protected DBHelper DB;
+    protected EditText eMoney;
+    protected TextView tShow;
+    protected Button buttonBreakfast;
+    protected Button buttonLunch;
+    protected Button buttonDinner;
+    protected Button buttonSave;
+    protected Button buttonCancel;
+    protected EditText eExplanation;
+    protected EditText eTime;
 
-    private int spendType=0;
-    private int account=0;
+    protected int spendType=0;
+    protected int account=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class AddActivity extends AppCompatActivity {
         this.setTitle("新增花費");
     }
 
-    public void findViews(){
+    public void findViews() {
         eMoney = (EditText) findViewById(R.id.money);
         tShow = (TextView) findViewById(R.id.show);
         buttonBreakfast = (Button) findViewById(R.id.buttonBreakfast);
@@ -66,33 +66,38 @@ public class AddActivity extends AppCompatActivity {
         buttonDinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spendType=3;
+                spendType = 3;
             }
         });
+        buttonSave.setOnClickListener(addRecord);
     }
 
-    public void addRecord(View v){
-        String time = eTime.getText().toString();
-        String moneyString = eMoney.getText().toString();
-        int money=0;
-        if(!moneyString.isEmpty()){
-            money = Integer.parseInt(moneyString);
+    public View.OnClickListener addRecord = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            String time = eTime.getText().toString();
+            String moneyString = eMoney.getText().toString();
+            int money=0;
+            if(!moneyString.isEmpty()){
+                money = Integer.parseInt(moneyString);
+            }
+
+            String show ="NT$"+money;
+            String explanation = eExplanation.getText().toString();
+
+            ContentValues values = new ContentValues();
+            values.put("type", spendType);
+            values.put("money", money);
+            values.put("explanation", explanation);
+            values.put("time", time);
+            values.put("account", account);
+            long id = DB.getWritableDatabase().insert("record", null, values);
+            Log.d("ADD", id+"");
+
+            AddActivity.this.finish();
         }
 
-        String show ="NT$"+money;
-        String explanation = eExplanation.getText().toString();
-
-        ContentValues values = new ContentValues();
-        values.put("type", spendType);
-        values.put("money", money);
-        values.put("explanation", explanation);
-        values.put("time", time);
-        values.put("account", account);
-        long id = DB.getWritableDatabase().insert("record", null, values);
-        Log.d("ADD", id+"");
-
-        AddActivity.this.finish();
-    }
+    };
 
     public void cancelButton(View v){
         AddActivity.this.finish();

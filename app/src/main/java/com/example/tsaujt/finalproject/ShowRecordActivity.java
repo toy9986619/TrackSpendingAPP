@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ public class ShowRecordActivity extends AppCompatActivity {
     String spendName;
     String explanation;
     int recordId;
+    int recordIndex;
     String time;
 
     @Override
@@ -35,11 +37,28 @@ public class ShowRecordActivity extends AppCompatActivity {
         findViews();
         Bundle bundle = this.getIntent().getExtras();
         time = bundle.getString("time");
-        recordId = bundle.getInt("_id");
-        String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
+        recordIndex = bundle.getInt("recordIndex");
+
+        //Log.d("CHECK", Integer.toString(recordId));
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        showItem();
+
+
+    }
+
+    public void showItem(){
+        Log.d("CHECK", Integer.toString(recordIndex));
+        String db_query = "SELECT record.*, spendtype.typename, spendtype._id AS sid FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
         Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
 
-        c.moveToPosition(recordId);
+        c.moveToPosition(recordIndex);
+        recordId=c.getInt(c.getColumnIndex("_id"));
         money = c.getInt(c.getColumnIndex("money"));
         spendType=c.getInt(c.getColumnIndex("type"));
         spendName = c.getString(c.getColumnIndex("typename"));
@@ -49,7 +68,7 @@ public class ShowRecordActivity extends AppCompatActivity {
         showSpentType.setText(spendName);
         showTime.setText(time);
 
-
+        c.close();
     }
 
     public void findViews(){
@@ -71,16 +90,18 @@ public class ShowRecordActivity extends AppCompatActivity {
             Intent intent = new Intent(ShowRecordActivity.this, EditActivity.class);
             Bundle bundle = ShowRecordActivity.this.getIntent().getExtras();
             bundle.putString("time", time);
-            bundle.putInt("_id", recordId);
+            bundle.putInt("recordId", recordId);
             bundle.putInt("money", money);
             bundle.putInt("spendType", spendType);
             bundle.putString("explanation", explanation);
+            Log.d("CHECK", Integer.toString(recordId));
 
             intent.putExtras(bundle);
-            startActivityForResult(intent, 1);
+            startActivity(intent);
 
             return true;
         }
     };
+
 
 }

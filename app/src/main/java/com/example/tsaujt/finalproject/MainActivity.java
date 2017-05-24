@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         showItem(liner);
 
 
-    };
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -111,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     public void showItem(LinearLayout liner){
-        String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
+        String db_query = "SELECT record.*, spendtype.typename, spendtype._id AS sid FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
         Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
         String itemString="";
         //int linerIndex = 0;
 
         c.moveToFirst();
         while(!c.isAfterLast()){
-            if(c.getColumnIndex("_id")!=0){
+            //if(c.getInt(c.getColumnIndex("_id"))!=0){
                 TextView itemTV = new TextView(this);
                 itemString =c.getString(c.getColumnIndex("_id"))+" "+ c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
                 itemTV.setText(itemString);
@@ -131,9 +131,11 @@ public class MainActivity extends AppCompatActivity {
                 liner.addView(itemTV);
                 //liner.addView(itemTV, linerIndex);
                 //linerIndex++;
-            }
+            //}
             c.moveToNext();
         }
+
+        c.close();
 
 
     }
@@ -176,10 +178,10 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent editIntent = new Intent(MainActivity.this, ShowRecordActivity.class);
             Bundle recordBundle = new Bundle();
-            int recordId = liner.indexOfChild(v);
+            int recordIndex = liner.indexOfChild(v);
 
             recordBundle.putString("time", time);
-            recordBundle.putInt("_id", recordId);
+            recordBundle.putInt("recordIndex", recordIndex);
 
             editIntent.putExtras(recordBundle);
             startActivity(editIntent);

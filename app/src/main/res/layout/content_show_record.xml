@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.tsaujt.finalproject.MainActivity"
+    tools:context="com.example.tsaujt.finalproject.ShowRecordActivity"
     tools:showIn="@layout/activity_show_record">
 
 
@@ -187,6 +187,7 @@
         android:layout_marginLeft="101dp"
         android:layout_marginStart="101dp"
         android:layout_marginTop="28dp"
+        android:onClick="deleteRecord"
         android:text="刪除"
         app:layout_constraintLeft_toLeftOf="@+id/show_Time"
         app:layout_constraintTop_toBottomOf="@+id/show_Time" />

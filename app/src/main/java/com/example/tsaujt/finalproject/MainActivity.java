@@ -3,9 +3,12 @@ package com.example.tsaujt.finalproject;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
@@ -14,13 +17,11 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     public String time = "20160528";
     DBHelper DB;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                       new Intent(MainActivity.this, AddActivity.class));
             }
         });
-
         this.setTitle(time);        //設定標題
 
         //set DB
@@ -55,7 +55,15 @@ public class MainActivity extends AppCompatActivity {
         //Liner顯示
         liner = (LinearLayout) findViewById(R.id.LinerShow);
 
-        //showItem(liner);
+        //滑動
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
     }
 
@@ -66,10 +74,8 @@ public class MainActivity extends AppCompatActivity {
         //Liner顯示
         if(liner.getChildCount()!=0) {
             liner.removeAllViews();
-            //((ViewGroup) liner.getParent()).removeView(liner);
         }
 
-        //liner = (LinearLayout) findViewById(R.id.LinerShow);
         showItem(liner);
 
 
@@ -91,47 +97,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-    /*public void showItem(ListView list){
-        String db_query = "SELECT * FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
-        Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
-
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.list_row,
-                c,
-                new String[] {"record._id", "record.time", "spendtime.typename", "record.money"},
-                new int[] {R.id.item_id, R.id.item_time, R.id.item_type, R.id.item_money},
-                0);
-        list.setAdapter(adapter);
-
-
-        //c.close();
-    }*/
-
     public void showItem(LinearLayout liner){
         String db_query = "SELECT record.*, spendtype.typename, spendtype._id AS sid FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
         Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
         String itemString="";
-        //int linerIndex = 0;
 
         c.moveToFirst();
         while(!c.isAfterLast()){
-            //if(c.getInt(c.getColumnIndex("_id"))!=0){
-                TextView itemTV = new TextView(this);
-                itemString =c.getString(c.getColumnIndex("_id"))+" "+ c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
-                itemTV.setText(itemString);
-                itemTV.setId(Utils.generateViewId());
-                itemTV.setClickable(true);
-                itemTV.setOnClickListener(editEvent);
-                LinearLayoutCompat.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(200, 200);
-                itemTV.setLayoutParams(layoutParams);
-                itemTV.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-                liner.addView(itemTV);
-                //liner.addView(itemTV, linerIndex);
-                //linerIndex++;
-            //}
+
+            TextView itemTV = new TextView(this);
+            itemString =c.getString(c.getColumnIndex("_id"))+" "+ c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
+            itemTV.setText(itemString);
+            itemTV.setId(Utils.generateViewId());
+            itemTV.setClickable(true);
+            itemTV.setOnClickListener(editEvent);
+            LinearLayoutCompat.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(200, 200);
+            itemTV.setLayoutParams(layoutParams);
+            itemTV.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+            liner.addView(itemTV);
+
             c.moveToNext();
         }
 
@@ -191,5 +175,29 @@ public class MainActivity extends AppCompatActivity {
     public void showDB(View view){
         startActivity(
                 new Intent(MainActivity.this, ShowDBActivity.class));
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

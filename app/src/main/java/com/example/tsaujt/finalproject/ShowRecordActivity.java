@@ -103,5 +103,10 @@ public class ShowRecordActivity extends AppCompatActivity {
         }
     };
 
+    public void deleteRecord(View view){
+        DB.getWritableDatabase().delete("record", "_id="+recordId, null);
+        this.finish();
+    }
+
 
 }

@@ -1,11 +1,13 @@
 package com.example.tsaujt.finalproject;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText ePasswd;
     private SharedPreferences settings;
     private static final String data = "DATA";
+    private static Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +75,18 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("OKHTTP", json);
                         //解析JSON
                         parseJSON(json);
-                        LoginActivity.this.finish();
+
                         break;
 
                     case 403 :
+                        makeTextAndShow(LoginActivity.this, "http 403 error", Toast.LENGTH_SHORT);
                         break;
                     case 404 :
+                        makeTextAndShow(LoginActivity.this, "http 404 error", Toast.LENGTH_SHORT);
                         break;
 
                     case 500 :
+                        makeTextAndShow(LoginActivity.this, "http 500 error", Toast.LENGTH_SHORT);
                         break;
                 }
             }
@@ -101,6 +107,13 @@ public class LoginActivity extends AppCompatActivity {
             if(status==1){
                 String user = loginJson.getString("user");
                 saveData(user);
+                makeTextAndShow(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT);
+                LoginActivity.this.finish();
+            }else{
+                String error = loginJson.getString("error");
+                makeTextAndShow(LoginActivity.this, "登入失敗\n"+error, Toast.LENGTH_SHORT);
+
+                //makeTextAndShow(LoginActivity.this, error, Toast.LENGTH_SHORT);
             }
 
         }catch(JSONException e){
@@ -112,9 +125,24 @@ public class LoginActivity extends AppCompatActivity {
         settings = getSharedPreferences(data,0);
         settings.edit()
                 .putString("user", user).apply();
+
     }
 
+    private void makeTextAndShow(final Context context, final String text, final int duration) {
+        LoginActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                if (toast == null) {
+                    //如果還沒有用過makeText方法，才使用
+                    toast = android.widget.Toast.makeText(context, text, duration);
+                } else {
+                    toast.setText(text);
+                    toast.setDuration(duration);
+                }
+                toast.show();
+            }
+        });
 
+    }
 
 
 }

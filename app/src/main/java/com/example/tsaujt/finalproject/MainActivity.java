@@ -1,6 +1,8 @@
 package com.example.tsaujt.finalproject;
 
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +22,8 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -27,6 +31,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DBHelper DB;
     LinearLayout liner;
     //private Toolbar toolbar;
+    private SharedPreferences settings;
+    private static final String data = "DATA";
+    TextView userText;
+    MenuItem loginItem;
+    MenuItem logoutItem;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         //toolbar.inflateMenu(R.menu.menu_main);
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
+
 
 
         //漂浮按鈕
@@ -62,9 +73,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        findViews();
+    }
+    public void findViews(){
+        View headerView = navigationView.getHeaderView(0);
+        Menu menuNav = navigationView.getMenu();
+        userText = (TextView) headerView.findViewById(R.id.text_user);
+        loginItem = menuNav.findItem(R.id.nav_login);
+        logoutItem = menuNav.findItem(R.id.nav_logout);
     }
 
     @Override
@@ -77,6 +96,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         showItem(liner);
+
+        //Nav調整
+        String user = readUser();
+
+        if(user!=null){
+            userText.setText(user);
+            loginItem.setVisible(false);
+            logoutItem.setVisible(true);
+        }else{
+            userText.setText("請登入");
+            loginItem.setVisible(true);
+            logoutItem.setVisible(false);
+        }
+
 
 
     }
@@ -182,13 +215,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_manage) {
+        if (id == R.id.nav_login) {
             startActivity(
                     new Intent(MainActivity.this, LoginActivity.class));
+        }
+        else if (id == R.id.nav_logout){
+            userLogout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public String readUser(){
+        settings = getSharedPreferences(data,0);
+        String username = settings.getString("user",null);
+
+        return username;
+    }
+
+    public void userLogout(){
+        settings = getSharedPreferences(data,0);
+        settings.edit().remove("user").apply();
+        userText.setText("請登入");
+        loginItem.setVisible(true);
+        logoutItem.setVisible(false);
+
     }
 }

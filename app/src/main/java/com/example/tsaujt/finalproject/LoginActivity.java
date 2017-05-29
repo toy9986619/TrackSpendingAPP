@@ -1,10 +1,15 @@
 package com.example.tsaujt.finalproject;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -19,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
     EditText eEmail;
     EditText ePasswd;
+    private SharedPreferences settings;
+    private static final String data = "DATA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +71,16 @@ public class LoginActivity extends AppCompatActivity {
                         String json = response.body().string();
                         Log.d("OKHTTP", json);
                         //解析JSON
-                        //parseJSON(json);
+                        parseJSON(json);
+                        LoginActivity.this.finish();
                         break;
 
-                    case 404:
+                    case 403 :
+                        break;
+                    case 404 :
                         break;
 
-                    case 500:
+                    case 500 :
                         break;
                 }
             }
@@ -81,6 +91,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void parseJSON(String json){
+        try{
+            JSONObject loginJson = new JSONObject(json);
+            int status = loginJson.getInt("status");
+
+            if(status==1){
+                String user = loginJson.getString("user");
+                saveData(user);
+            }
+
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void saveData(String user){
+        settings = getSharedPreferences(data,0);
+        settings.edit()
+                .putString("user", user).apply();
     }
 
 

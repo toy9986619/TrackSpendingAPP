@@ -7,17 +7,6 @@
     tools:context="com.example.tsaujt.finalproject.LoginActivity">
 
     <EditText
-        android:id="@+id/login_passwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="0dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintLeft_toRightOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
-
-    <EditText
         android:id="@+id/login_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +19,17 @@
         app:layout_constraintLeft_toRightOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/login_passwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toRightOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView5"

@@ -16,9 +16,9 @@
         android:layout_height="408dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,13 +28,14 @@
 
     <Button
         android:id="@+id/button_showDB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="31dp"
+        style="@style/MyAppTheme"
+        android:layout_width="124dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="3dp"
         android:onClick="showDB"
         android:text="DB資料確認"
-        app:layout_constraintLeft_toLeftOf="@+id/LinerShow"
-        app:layout_constraintTop_toBottomOf="@+id/LinerShow" />
+        app:layout_constraintTop_toBottomOf="@+id/LinerShow"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

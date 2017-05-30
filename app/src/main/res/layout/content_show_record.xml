@@ -20,8 +20,6 @@
         app:layout_constraintTop_toTopOf="@+id/textView33"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView33"
-        android:layout_marginBottom="0dp"
-        android:layout_marginRight="-19dp"
         app:layout_constraintRight_toRightOf="@+id/textView34" />
 
     <TextView
@@ -35,8 +33,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView31"
         app:layout_constraintVertical_bias="1.0"
-        android:layout_marginStart="14dp"
-        android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="@+id/textView35" />
 
     <TextView
@@ -50,8 +46,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView32"
         app:layout_constraintTop_toTopOf="@+id/textView32"
         app:layout_constraintVertical_bias="0.727"
-        android:layout_marginStart="14dp"
-        android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="@+id/show_money" />
 
     <TextView
@@ -140,15 +134,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView24"
         app:layout_constraintLeft_toRightOf="@+id/show_spendtype"
         app:layout_constraintTop_toTopOf="@+id/textView24"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteY="38dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/show_spendtype"
         android:layout_width="64dp"
         android:layout_height="57dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="27dp"
+        android:layout_marginLeft="13dp"
         android:text="類型"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -171,24 +164,26 @@
 
     <TextView
         android:id="@+id/show_Time"
-        android:layout_width="285dp"
-        android:layout_height="42dp"
+        android:layout_width="375dp"
+        android:layout_height="73dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:alpha="50"
         android:text="時間: "
-        android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="379dp"
-        android:layout_marginLeft="41dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textAlignment="textEnd"
+        android:textColor="#484891"
+        android:textSize="70sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/button_delete"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:alpha="50" />
 
     <Button
         android:id="@+id/button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="101dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="368dp"
+        android:layout_height="80dp"
         android:onClick="deleteRecord"
         android:text="刪除"
-        app:layout_constraintLeft_toLeftOf="@+id/show_Time"
-        app:layout_constraintTop_toBottomOf="@+id/show_Time" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
 </android.support.constraint.ConstraintLayout>

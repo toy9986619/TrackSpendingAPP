@@ -1,13 +1,13 @@
 package com.example.tsaujt.finalproject;
 
+//import android.app.FragmentManager;
 import android.content.ContentValues;
-import android.support.annotation.IntegerRes;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,7 +23,10 @@ public class AddActivity extends AppCompatActivity {
     protected Button buttonSave;
     protected Button buttonCancel;
     protected EditText eExplanation;
-    protected EditText eTime;
+    protected TextView tTime;
+    public String time;
+    private BlankFragment blankFragment;
+    private FragmentManager mFragmentMgr;
 
     protected int spendType=0;
     protected int account=0;
@@ -33,8 +36,17 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         DB = DBHelper.getInstance(this);
+
+
+        mFragmentMgr = getSupportFragmentManager();
+
+
+
+        Bundle bundle = this.getIntent().getExtras();
+        time = bundle.getString("time");
         findViews();
         this.setTitle("新增花費");
+
     }
 
     public void findViews() {
@@ -46,7 +58,7 @@ public class AddActivity extends AppCompatActivity {
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonCancel = (Button) findViewById(R.id.buttonCancel);
         eExplanation = (EditText) findViewById(R.id.explanation);
-        eTime = (EditText) findViewById(R.id.time);
+        tTime = (TextView) findViewById(R.id.time);
 
 
         buttonBreakfast.setOnClickListener(new View.OnClickListener() {
@@ -70,12 +82,16 @@ public class AddActivity extends AppCompatActivity {
             }
         });
         buttonSave.setOnClickListener(addRecord);
+
+        tTime.setText(time);
+        //tShow.setClickable(true);
+        //tShow.setOnClickListener(countEvent);
     }
 
     public View.OnClickListener addRecord = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            String time = eTime.getText().toString();
+            String time = tTime.getText().toString();
             String moneyString = eMoney.getText().toString();
             int money=0;
             if(!moneyString.isEmpty()){
@@ -98,6 +114,17 @@ public class AddActivity extends AppCompatActivity {
         }
 
     };
+    /*
+    private View.OnClickListener countEvent = new View.OnClickListener () {
+
+        @Override
+        public void onClick(View v) {
+            blankFragment = new BlankFragment();
+            mFragmentMgr.beginTransaction()
+                    .replace(R.id.countmenu, blankFragment)
+                    .commit();
+        }
+    };*/
 
     public void cancelButton(View v){
         AddActivity.this.finish();

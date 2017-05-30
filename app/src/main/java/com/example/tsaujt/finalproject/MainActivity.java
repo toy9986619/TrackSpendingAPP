@@ -4,6 +4,7 @@ package com.example.tsaujt.finalproject;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //toolbar.inflateMenu(R.menu.menu_main);
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
 
+        TypeFaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/TCLM.ttf");
 
 
         //漂浮按鈕
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/TCLM.ttf");
 
         findViews();
     }
@@ -85,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userText = (TextView) headerView.findViewById(R.id.text_user);
         loginItem = menuNav.findItem(R.id.nav_login);
         logoutItem = menuNav.findItem(R.id.nav_logout);
+        userText.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/TCLM.ttf"));
+
+
     }
 
     @Override
@@ -140,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         while(!c.isAfterLast()){
 
             TextView itemTV = new TextView(this);
+            itemTV.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/TCLM.ttf"));
             itemString =c.getString(c.getColumnIndex("_id"))+" "+ c.getString(c.getColumnIndex("typename"))+" "+c.getString(c.getColumnIndex("money"));
             itemTV.setText(itemString);
             itemTV.setId(Utils.generateViewId());

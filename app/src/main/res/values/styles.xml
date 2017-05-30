@@ -22,4 +22,19 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="MyAppTheme" parent="AppTheme">
+        <!-- you should set typeface which you want to override with TypefaceUtil -->
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="MyAppTheme.NoActionBar" parent="AppTheme.NoActionBar">
+        <!-- you should set typeface which you want to override with TypefaceUtil -->
+        <item name="android:typeface">serif</item>
+    </style>
+
 </resources>

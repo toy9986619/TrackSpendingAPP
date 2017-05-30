@@ -24,12 +24,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    public String time = "20160528";
+    public String time;
     DBHelper DB;
     LinearLayout liner;
     //private Toolbar toolbar;
@@ -57,11 +58,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(
-                      new Intent(MainActivity.this, AddActivity.class));
+                Intent addIntent = new Intent(MainActivity.this, AddActivity.class);
+                Bundle addBundle = new Bundle();
+                addBundle.putString("time", time);
+                addIntent.putExtras(addBundle);
+
+                startActivity(addIntent);
             }
         });
-        this.setTitle(time);        //設定標題
+        //this.setTitle(time);        //設定標題
 
         //set DB
         DB = DBHelper.getInstance(this);
@@ -97,11 +102,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume(){
         super.onResume();
 
-        //Liner顯示
-        if(liner.getChildCount()!=0) {
-            liner.removeAllViews();
-        }
+        //設定時間
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
+        time = formatter.format(curDate);
+        //Log.d("check", time);
+        this.setTitle(time);        //設定標題
 
+        //Liner顯示
         showItem(liner);
 
         //Nav調整
@@ -118,15 +126,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("ADD", Integer.toString(resultCode));
+        //Log.d("ADD", Integer.toString(resultCode));
         //Log.d("ADD", Integer.toString(RESULT_OK));
-        Log.d("ADD", Integer.toString(requestCode));
+        //Log.d("ADD", Integer.toString(requestCode));
 
         if(resultCode == 1){ //確認是否從 popuptime 回傳
             if(requestCode == 1){ //確認所要執行的動作
@@ -138,6 +145,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void showItem(LinearLayout liner){
+        if(liner.getChildCount()!=0) {
+            liner.removeAllViews();
+        }
+
         String db_query = "SELECT record.*, spendtype.typename, spendtype._id AS sid FROM record INNER JOIN spendtype ON record.type = spendtype._id WHERE record.time = ?";
         Cursor c = DB.getReadableDatabase().rawQuery(db_query, new String[]{ time });
         String itemString="";

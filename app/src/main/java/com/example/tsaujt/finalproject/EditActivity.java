@@ -25,7 +25,7 @@ public class EditActivity extends AddActivity {
         //int money = bundle.getInt("money");
         //Log.d("ADD", Integer.toString(bundle.getInt("money")));
         tShow.setText("NT$"+bundle.getInt("money"));
-        eTime.setText(bundle.getString("time"), TextView.BufferType.EDITABLE);
+        tTime.setText(bundle.getString("time"), TextView.BufferType.EDITABLE);
         spendType=bundle.getInt("spendType");
         recordId=bundle.getInt("recordId");
         Log.d("CHECK Edit", Integer.toString(recordId));
@@ -39,7 +39,7 @@ public class EditActivity extends AddActivity {
     public View.OnClickListener saveRecord = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String time = eTime.getText().toString();
+            String time = tTime.getText().toString();
             String moneyString = eMoney.getText().toString();
             int money=0;
             if(!moneyString.isEmpty()){

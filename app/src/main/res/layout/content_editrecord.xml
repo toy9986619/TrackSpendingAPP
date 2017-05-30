@@ -13,10 +13,12 @@
         android:text="晚餐"
         android:textSize="20sp"
         app:layout_constraintLeft_toRightOf="@+id/buttonLunch"
-        app:layout_constraintTop_toTopOf="@+id/buttonBreakfast" />
+        app:layout_constraintTop_toTopOf="@+id/buttonBreakfast"
+        android:layout_marginStart="19dp" />
 
     <Button
         android:id="@+id/buttonLunch"
+
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginLeft="19dp"
@@ -25,6 +27,7 @@
         app:layout_constraintLeft_toRightOf="@+id/buttonBreakfast"
         app:layout_constraintTop_toTopOf="@+id/buttonBreakfast"
         android:layout_marginStart="19dp" />
+
 
     <TextView
         android:id="@+id/show"
@@ -131,6 +134,7 @@
         app:layout_constraintTop_toBottomOf="@+id/explanation"
         android:layout_marginEnd="33dp" />
 
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="100dp"
@@ -144,7 +148,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/time"
         android:layout_width="259dp"
         android:layout_height="40dp"
@@ -154,5 +158,6 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="@+id/money"
         android:layout_marginEnd="8dp" />
+
 
 </android.support.constraint.ConstraintLayout>

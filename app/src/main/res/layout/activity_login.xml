@@ -65,4 +65,19 @@
         android:text="登入"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_singup"
+        android:layout_width="259dp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="63dp"
+        android:layout_marginTop="233dp"
+        android:clickable="true"
+        android:onClick="signUp"
+        android:text="沒有帳號嗎? 來註冊吧!"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

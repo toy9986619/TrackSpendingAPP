@@ -1,6 +1,7 @@
 package com.example.tsaujt.finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     private void findViews() {
         eEmail = (EditText) findViewById(R.id.login_email);
         ePasswd = (EditText) findViewById(R.id.login_passwd);
+    }
+
+    public void signUp(View view){
+        startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+
     }
 
     public void loginButton(View view) {
@@ -127,6 +133,8 @@ public class LoginActivity extends AppCompatActivity {
                 .putString("user", user).apply();
 
     }
+
+
 
     private void makeTextAndShow(final Context context, final String text, final int duration) {
         LoginActivity.this.runOnUiThread(new Runnable() {

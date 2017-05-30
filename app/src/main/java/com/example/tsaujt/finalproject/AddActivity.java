@@ -2,6 +2,9 @@ package com.example.tsaujt.finalproject;
 
 //import android.app.FragmentManager;
 import android.content.ContentValues;
+
+import android.graphics.Typeface;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

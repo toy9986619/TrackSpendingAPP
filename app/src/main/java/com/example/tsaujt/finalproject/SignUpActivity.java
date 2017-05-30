@@ -30,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        //TypeFaceUtil.overrideFont(getApplicationContext(), "SANS-SERIF", "fonts/TCLM.ttf");
 
         setTitle("註冊");
         findViews();

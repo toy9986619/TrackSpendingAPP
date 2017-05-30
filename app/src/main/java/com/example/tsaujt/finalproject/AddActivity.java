@@ -40,10 +40,7 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         DB = DBHelper.getInstance(this);
 
-
         mFragmentMgr = getSupportFragmentManager();
-
-
 
         Bundle bundle = this.getIntent().getExtras();
         time = bundle.getString("time");

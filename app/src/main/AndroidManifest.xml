@@ -40,7 +40,8 @@
             android:theme="@style/MyAppTheme" />
 
 
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity"
+            android:theme="@style/MyAppTheme" />
 
     </application>
 

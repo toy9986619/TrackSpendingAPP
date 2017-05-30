@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MenuItem loginItem;
     MenuItem logoutItem;
     NavigationView navigationView;
+    private boolean timeflag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +104,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
 
         //設定時間
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
-        time = formatter.format(curDate);
-        //Log.d("check", time);
-        this.setTitle(time);        //設定標題
+        if(!timeflag) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+            Date curDate = new Date(System.currentTimeMillis()); // 獲取當前時間
+            time = formatter.format(curDate);
+            Log.d("check", time);
+            this.setTitle(time);        //設定標題
+        }
 
         //Liner顯示
         showItem(liner);
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(requestCode == 1){ //確認所要執行的動作
                 time=data.getExtras().getString("time");
                 Log.d("ADD", time);
+                timeflag=true;
                 this.setTitle(time);        //設定標題
             }
         }
